@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Bahasa Jepang Interaktif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.08)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .japanese-font {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); }
+            40% { transform: translateY(-10px) scale(1.05); }
+            60% { transform: translateY(-5px) scale(1.02); }
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 25%, #45b7d1 50%, #96ceb4 75%, #feca57 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            background: rgba(255, 255, 255, 0.98);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes neonPulse {
+            from { box-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
+            to { box-shadow: 0 0 30px rgba(102, 126, 234, 0.8), 0 0 40px rgba(102, 126, 234, 0.3); }
+        }
+        
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .rainbow-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbowShift 3s ease infinite;
+        }
+        
+        @keyframes rainbowShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .sparkle {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sparkle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: sparkleMove 3s linear infinite;
+        }
+        
+        @keyframes sparkleMove {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .morphing-bg {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: morphing 15s ease infinite;
+        }
+        
+        @keyframes morphing {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="gradient-bg text-white py-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="float absolute top-10 left-10 text-4xl">🌸</div>
+            <div class="float absolute top-20 right-20 text-3xl" style="animation-delay: -2s;">⛩️</div>
+            <div class="float absolute bottom-10 left-1/4 text-2xl" style="animation-delay: -4s;">🎋</div>
+            <div class="float absolute bottom-20 right-1/3 text-3xl" style="animation-delay: -1s;">🗾</div>
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="slide-in-left">
+                <h1 class="text-6xl font-bold mb-4 japanese-font rainbow-text">日本語を学ぼう</h1>
+                <p class="text-2xl mb-6 font-light">Mari Belajar Bahasa Jepang</p>
+                <div class="text-8xl mb-6 pulse">🇯🇵</div>
+                <div class="flex justify-center space-x-4 text-sm opacity-80">
+                    <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full">✨ Interaktif</span>
+                    <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full">🎯 Mudah Dipahami</span>
+                    <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full">🚀 Menyenangkan</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="glass-effect sticky top-0 z-50 border-b border-white border-opacity-20">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-center space-x-6 py-6">
+                <button onclick="showSection('video')" class="nav-btn px-8 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 sparkle neon-glow ring-2 ring-offset-2">
+                    📹 Video Pembelajaran
+                </button>
+                <button onclick="showSection('materi')" class="nav-btn px-8 py-3 rounded-2xl bg-gradient-to-r from-green-500 to-teal-600 text-white font-semibold hover:from-green-600 hover:to-teal-700 transition-all duration-300 transform hover:scale-105 sparkle">
+                    📚 Ringkasan Materi
+                </button>
+                <button onclick="showSection('quiz')" class="nav-btn px-8 py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 sparkle">
+                    🎯 Latihan Soal
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-8">
+        
+        <section id="video-section" class="section-content relative z-10 fade-in">
+            <div class="card-hover rounded-3xl p-10 mb-8 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 opacity-10 rounded-3xl"></div>
+                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center slide-in-left">📹 Video Pembelajaran</h2>
+                
+                <div id="video-player-container" class="relative overflow-hidden rounded-2xl aspect-video mb-8">
+                    <iframe id="youtube-video-player"
+                            width="100%"
+                            height="100%"
+                            src="https://www.youtube.com/embed/WhAfcLe3C54?enablejsapi=1"
+                            title="Tips cepat belajar Hiragana dan Katakana"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen
+                            class="absolute top-0 left-0 w-full h-full rounded-2xl transform scale-0 opacity-0 transition-all duration-500 ease-in-out">
+                    </iframe>
+                </div>
+                
+                <div id="video-controls-container" class="morphing-bg rounded-2xl p-12 mb-8 text-center relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-white mb-6">
+                            <div class="text-8xl mb-6 bounce">▶️</div>
+                            <h3 class="text-3xl font-bold mb-4">Hiragana & Katakana Dasar</h3>
+                            <p class="text-xl text-gray-100 mb-6">Video pembelajaran interaktif tentang sistem penulisan Jepang</p>
+                        </div>
+                        <button id="play-button" onclick="toggleVideo()" class="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-110 sparkle">
+                            ▶️ Putar Video
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="card-hover bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-2xl text-center slide-in-left">
+                        <div class="text-4xl mb-4 japanese-font pulse">あ</div>
+                        <h4 class="font-bold text-lg mb-2">Hiragana</h4>
+                        <p class="text-gray-700">Sistem penulisan untuk kata Jepang</p>
+                    </div>
+                    <div class="card-hover bg-gradient-to-br from-green-100 to-green-200 p-6 rounded-2xl text-center fade-in" style="animation-delay: 0.2s;">
+                        <div class="text-4xl mb-4 japanese-font pulse" style="animation-delay: 0.5s;">ア</div>
+                        <h4 class="font-bold text-lg mb-2">Katakana</h4>
+                        <p class="text-gray-700">Sistem penulisan untuk kata asing</p>
+                    </div>
+                    <div class="card-hover bg-gradient-to-br from-purple-100 to-purple-200 p-6 rounded-2xl text-center slide-in-right">
+                        <div class="text-4xl mb-4 japanese-font pulse" style="animation-delay: 1s;">漢</div>
+                        <h4 class="font-bold text-lg mb-2">Kanji</h4>
+                        <p class="text-gray-700">Karakter Cina dalam bahasa Jepang</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="materi-section" class="section-content hidden relative z-10">
+            <div class="card-hover rounded-3xl p-10 mb-8 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-green-400 via-blue-500 to-purple-500 opacity-10 rounded-3xl"></div>
+                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center slide-in-left">📚 Ringkasan Materi</h2>
+                
+                <div class="mb-12">
+                    <h3 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Hiragana (ひらがな)</h3>
+                    <div class="grid grid-cols-5 gap-4 mb-8">
+                        <div class="card-hover bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-2xl text-center japanese-font slide-in-left">
+                            <div class="text-3xl font-bold mb-2 pulse">あ</div>
+                            <div class="text-lg font-semibold">a</div>
+                        </div>
+                        <div class="card-hover bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-2xl text-center japanese-font fade-in" style="animation-delay: 0.1s;">
+                            <div class="text-3xl font-bold mb-2 pulse" style="animation-delay: 0.2s;">い</div>
+                            <div class="text-lg font-semibold">i</div>
+                        </div>
+                        <div class="card-hover bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-2xl text-center japanese-font fade-in" style="animation-delay: 0.2s;">
+                            <div class="text-3xl font-bold mb-2 pulse" style="animation-delay: 0.4s;">う</div>
+                            <div class="text-lg font-semibold">u</div>
+                        </div>
+                        <div class="card-hover bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-2xl text-center japanese-font fade-in" style="animation-delay: 0.3s;">
+                            <div class="text-3xl font-bold mb-2 pulse" style="animation-delay: 0.6s;">え</div>
+                            <div class="text-lg font-semibold">e</div>
+                        </div>
+                        <div class="card-hover bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-2xl text-center japanese-font slide-in-right">
+                            <div class="text-3xl font-bold mb-2 pulse" style="animation-delay: 0.8s;">お</div>
+                            <div class="text-lg font-semibold">o</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <h3 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-600">Kosakata Dasar</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="card-hover bg-gradient-to-br from-green-100 to-green-200 p-8 rounded-2xl slide-in-left">
+                            <h4 class="font-bold text-xl mb-6 text-green-800">🙋‍♂️ Salam</h4>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center bg-white p-4 rounded-xl">
+                                    <span class="japanese-font text-lg font-semibold">おはよう</span>
+                                    <span class="text-gray-700 font-medium">Selamat pagi</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white p-4 rounded-xl">
+                                    <span class="japanese-font text-lg font-semibold">こんにちは</span>
+                                    <span class="text-gray-700 font-medium">Selamat siang</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white p-4 rounded-xl">
+                                    <span class="japanese-font text-lg font-semibold">こんばんは</span>
+                                    <span class="text-gray-700 font-medium">Selamat malam</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-hover bg-gradient-to-br from-teal-100 to-teal-200 p-8 rounded-2xl slide-in-right">
+                            <h4 class="font-bold text-xl mb-6 text-teal-800">👨‍👩‍👧‍👦 Keluarga</h4>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center bg-white p-4 rounded-xl">
+                                    <span class="japanese-font text-lg font-semibold">おかあさん</span>
+                                    <span class="text-gray-700 font-medium">Ibu</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white p-4 rounded-xl">
+                                    <span class="japanese-font text-lg font-semibold">おとうさん</span>
+                                    <span class="text-gray-700 font-medium">Ayah</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white p-4 rounded-xl">
+                                    <span class="japanese-font text-lg font-semibold">あに</span>
+                                    <span class="text-gray-700 font-medium">Kakak laki-laki</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Tata Bahasa Dasar</h3>
+                    <div class="card-hover bg-gradient-to-br from-purple-100 to-purple-200 p-8 rounded-2xl">
+                        <h4 class="font-bold text-xl mb-6 text-purple-800">📝 Pola Kalimat: です (desu)</h4>
+                        <div class="space-y-6">
+                            <div class="bg-white p-6 rounded-2xl border-l-8 border-purple-500 sparkle">
+                                <div class="japanese-font text-2xl font-bold mb-2">わたしは がくせい です。</div>
+                                <div class="text-gray-600 text-lg mb-2">Watashi wa gakusei desu.</div>
+                                <div class="text-gray-500 font-medium">Saya adalah siswa.</div>
+                            </div>
+                            <div class="bg-white p-6 rounded-2xl border-l-8 border-purple-500 sparkle">
+                                <div class="japanese-font text-2xl font-bold mb-2">これは ほん です。</div>
+                                <div class="text-gray-600 text-lg mb-2">Kore wa hon desu.</div>
+                                <div class="text-gray-500 font-medium">Ini adalah buku.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz-section" class="section-content hidden relative z-10">
+            <div class="card-hover rounded-3xl p-10 mb-8 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 opacity-10 rounded-3xl"></div>
+                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center slide-in-left">🎯 Latihan Soal</h2>
+                
+                <div id="quiz-container">
+                    <div class="mb-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Soal <span id="current-question">1</span> dari <span id="total-questions">5</span></span>
+                            <span class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-2xl text-lg font-bold sparkle">Skor: <span id="score">0</span></span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4 mb-8 overflow-hidden">
+                            <div id="progress-bar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-4 rounded-full transition-all duration-500 sparkle" style="width: 20%"></div>
+                        </div>
+                    </div>
+
+                    <div id="question-container" class="mb-10">
+                        <div class="card-hover bg-gradient-to-br from-gray-50 to-gray-100 p-8 rounded-2xl mb-8 border-2 border-purple-200">
+                            <h3 class="text-2xl font-bold mb-6 text-gray-800" id="question-text">Apa arti dari "おはよう"?</h3>
+                            <div class="japanese-font text-5xl text-center mb-6 pulse rainbow-text" id="question-japanese">おはよう</div>
+                        </div>
+                        
+                        <div class="space-y-4" id="options-container">
+                            <button onclick="selectAnswer(0)" class="option-btn w-full p-6 text-left bg-white border-3 border-gray-200 rounded-2xl hover:border-purple-400 hover:bg-purple-50 transition-all duration-300 transform hover:scale-105 text-lg font-medium">
+                                A. Selamat pagi
+                            </button>
+                            <button onclick="selectAnswer(1)" class="option-btn w-full p-6 text-left bg-white border-3 border-gray-200 rounded-2xl hover:border-purple-400 hover:bg-purple-50 transition-all duration-300 transform hover:scale-105 text-lg font-medium">
+                                B. Selamat siang
+                            </button>
+                            <button onclick="selectAnswer(2)" class="option-btn w-full p-6 text-left bg-white border-3 border-gray-200 rounded-2xl hover:border-purple-400 hover:bg-purple-50 transition-all duration-300 transform hover:scale-105 text-lg font-medium">
+                                C. Selamat malam
+                            </button>
+                            <button onclick="selectAnswer(3)" class="option-btn w-full p-6 text-left bg-white border-3 border-gray-200 rounded-2xl hover:border-purple-400 hover:bg-purple-50 transition-all duration-300 transform hover:scale-105 text-lg font-medium">
+                                D. Terima kasih
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button id="next-btn" onclick="nextQuestion()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-110 opacity-50 cursor-not-allowed sparkle" disabled>
+                            Soal Berikutnya
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-results" class="hidden text-center">
+                    <div class="text-8xl mb-6 bounce">🎉</div>
+                    <h3 class="text-4xl font-bold mb-6 rainbow-text">Quiz Selesai!</h3>
+                    <div class="text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 pulse" id="final-score">0/5</div>
+                    <p class="text-xl text-gray-600 mb-8 font-medium" id="score-message">Bagus sekali!</p>
+                    <button onclick="restartQuiz()" class="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-110 sparkle">
+                        🔄 Ulangi Quiz
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="morphing-bg text-white py-16 mt-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="float absolute top-5 left-10 text-2xl">⭐</div>
+            <div class="float absolute top-10 right-20 text-3xl" style="animation-delay: -1s;">✨</div>
+            <div class="float absolute bottom-5 left-1/4 text-2xl" style="animation-delay: -3s;">🌟</div>
+            <div class="float absolute bottom-10 right-1/3 text-2xl" style="animation-delay: -2s;">💫</div>
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="mb-8">
+                <p class="text-3xl font-bold mb-4 japanese-font rainbow-text">がんばって！</p>
+                <p class="text-xl mb-2">(Ganbatte! - Semangat!)</p>
+                <p class="text-lg opacity-90">Media Pembelajaran Bahasa Jepang Interaktif</p>
+            </div>
+            <div class="flex justify-center space-x-6 text-4xl mb-6">
+                <span class="pulse">🎌</span>
+                <span class="pulse" style="animation-delay: 0.5s;">📚</span>
+                <span class="pulse" style="animation-delay: 1s;">🎯</span>
+                <span class="pulse" style="animation-delay: 1.5s;">✨</span>
+            </div>
+            <div class="text-sm opacity-75">
+                <p>Belajar bahasa Jepang dengan cara yang menyenangkan dan interaktif</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        // Navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').classList.remove('hidden');
+            document.getElementById(sectionName + '-section').classList.add('fade-in');
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-offset-2');
+            });
+            event.target.classList.add('ring-2', 'ring-offset-2');
+        }
+
+        // Video functionality
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-video-player', {
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready
+        }
+
+        function toggleVideo() {
+            const videoContainer = document.getElementById('video-player-container');
+            const controlsContainer = document.getElementById('video-controls-container');
+            const playButton = document.getElementById('play-button');
+
+            // Hide controls and show video iframe
+            controlsContainer.classList.add('hidden');
+            videoContainer.querySelector('iframe').classList.remove('scale-0', 'opacity-0');
+            videoContainer.querySelector('iframe').classList.add('scale-100', 'opacity-100');
+
+            // Play the video
+            player.playVideo();
+        }
+
+        // Quiz functionality
+        const quizData = [
+            {
+                question: 'Apa arti dari "おはよう"?',
+                japanese: 'おはよう',
+                options: ['Selamat pagi', 'Selamat siang', 'Selamat malam', 'Terima kasih'],
+                correct: 0
+            },
+            {
+                question: 'Bagaimana cara menulis "a" dalam hiragana?',
+                japanese: '?',
+                options: ['あ', 'い', 'う', 'え'],
+                correct: 0
+            },
+            {
+                question: 'Apa arti dari "ありがとう"?',
+                japanese: 'ありがとう',
+                options: ['Maaf', 'Terima kasih', 'Permisi', 'Selamat tinggal'],
+                correct: 1
+            },
+            {
+                question: 'Bagaimana cara mengatakan "saya" dalam bahasa Jepang?',
+                japanese: '?',
+                options: ['あなた', 'わたし', 'かれ', 'かのじょ'],
+                correct: 1
+            },
+            {
+                question: 'Apa arti dari "がくせい"?',
+                japanese: 'がくせい',
+                options: ['Guru', 'Siswa', 'Dokter', 'Perawat'],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = -1;
+
+        function selectAnswer(index) {
+            selectedAnswer = index;
+            
+            // Reset all options
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('border-blue-500', 'bg-blue-100');
+            });
+            
+            // Highlight selected option
+            event.target.classList.add('border-blue-500', 'bg-blue-100');
+            
+            // Enable next button
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = false;
+            nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        function nextQuestion() {
+            // Check answer
+            if (selectedAnswer === quizData[currentQuestion].correct) {
+                score++;
+                document.getElementById('score').textContent = score;
+            }
+            
+            currentQuestion++;
+            
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+            
+            selectedAnswer = -1;
+        }
+
+        function loadQuestion() {
+            const question = quizData[currentQuestion];
+            
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+            document.getElementById('question-text').textContent = question.question;
+            
+            // Update the question-japanese display based on the question
+            const questionJapanese = document.getElementById('question-japanese');
+            if (question.japanese === '?') {
+                questionJapanese.textContent = ''; // Hide the Japanese text for this question type
+            } else {
+                questionJapanese.textContent = question.japanese;
+            }
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.onclick = () => selectAnswer(index);
+                button.className = 'option-btn w-full p-6 text-left bg-white border-3 border-gray-200 rounded-2xl hover:border-purple-400 hover:bg-purple-50 transition-all duration-300 transform hover:scale-105 text-lg font-medium';
+                button.innerHTML = `${String.fromCharCode(65 + index)}. ${option}`;
+                optionsContainer.appendChild(button);
+            });
+            
+            // Update progress bar
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            
+            // Disable next button
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = true;
+            nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            if (currentQuestion === quizData.length - 1) {
+                nextBtn.textContent = 'Selesai';
+            } else {
+                nextBtn.textContent = 'Soal Berikutnya';
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+            
+            const finalScore = document.getElementById('final-score');
+            finalScore.textContent = `${score}/${quizData.length}`;
+            
+            const scoreMessage = document.getElementById('score-message');
+            if (score === quizData.length) {
+                scoreMessage.textContent = 'Sempurna! Anda menguasai materi dengan baik! 🌟';
+            } else if (score >= quizData.length * 0.8) {
+                scoreMessage.textContent = 'Bagus sekali! Terus belajar! 👏';
+            } else if (score >= quizData.length * 0.6) {
+                scoreMessage.textContent = 'Cukup baik! Masih perlu latihan lagi. 📚';
+            } else {
+                scoreMessage.textContent = 'Jangan menyerah! Ulangi materi dan coba lagi. 💪';
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = -1;
+            
+            document.getElementById('score').textContent = '0';
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            
+            loadQuestion();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('video');
+            loadQuestion();
+        });
+    </script>
+</body>
+</html>
